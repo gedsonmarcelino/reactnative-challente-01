@@ -10,14 +10,28 @@ export function Home() {
 
   function handleAddTask(newTaskTitle: string) {
     //TODO - add new task
+    const newTask = {
+      id: Math.floor(Math.random() * (10000 - 1) + 1),
+      title: newTaskTitle,
+      done: false
+    } as Task
+
+    setTasks([
+      ...tasks,
+      newTask
+    ])
   }
 
   function handleToggleTaskDone(id: number) {
     //TODO - toggle task done if exists
+    const tasksChanged = tasks.map(item => item.id === id ? { ...item, done: !item.done } : item)
+    setTasks(tasksChanged)
   }
 
   function handleRemoveTask(id: number) {
     //TODO - remove task from state
+    const newTasks = tasks.filter(item => item.id !== id)
+    setTasks(newTasks)
   }
 
   return (
@@ -26,10 +40,10 @@ export function Home() {
 
       <TodoInput addTask={handleAddTask} />
 
-      <TasksList 
-        tasks={tasks} 
+      <TasksList
+        tasks={tasks}
         toggleTaskDone={handleToggleTaskDone}
-        removeTask={handleRemoveTask} 
+        removeTask={handleRemoveTask}
       />
     </View>
   )
